@@ -225,8 +225,11 @@ class LanguagePack::Helpers::BundlerWrapper
   def bundler_version_escape_valve!
     topic("Removing BUNDLED WITH version in the Gemfile.lock")
     contents = File.read("Gemfile.lock")
+    new_contents = contents.sub(/^BUNDLED WITH$(\r?\n)   (?<major>\d+)\.\d+\.\d+/m, '')
+    puts "============"
+    puts new_contents
     File.open("Gemfile.lock", "w") do |f|
-      f.write contents.sub(/^BUNDLED WITH$(\r?\n)   (?<major>\d+)\.\d+\.\d+/m, '')
+      f.write new_contents
     end
   end
 end
